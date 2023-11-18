@@ -15,15 +15,17 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.11",
     "@mui/joy": "^5.0.0-beta.11",
-    "@tauri-apps/api": "^1.5.0",
+    "@tauri-apps/api": "^1.5.1",
     "react": "latest",
     "react-dom": "latest"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.0",
+    "@tauri-apps/cli": "^2.0.0-alpha.17",
+    "@types/node": "^20.9.1",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
+    "internal-ip": "^8.0.0",
     "typescript": "latest",
     "vite": "latest"
   }
