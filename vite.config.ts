@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { internalIpV4 } from 'internal-ip'
 
 async function createConfig() {
-  const host = await internalIpV4();
+  //const host = await internalIpV4();
 
   return defineConfig({
     plugins: [react()],
@@ -14,7 +14,7 @@ async function createConfig() {
       strictPort: true,
       hmr: {
         protocol: 'ws',
-        host,
+        host:'0.0.0.0',
         port: 5183,
       },
     },

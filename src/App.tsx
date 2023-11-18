@@ -19,7 +19,7 @@ import OrderList from './components/OrderList';
 import Header from './components/Header';
 import ColorSchemeToggle from './components/ColorSchemeToggle';
 
-import { invoke } from '@tauri-apps/api'
+import { primitives } from '@tauri-apps/api'
 import OrderPages from './Pages/OrderPages';
 import ProfilePages from './Pages/ProfilePages';
 import GroupPages from './Pages/GroupPages';
@@ -34,23 +34,23 @@ export default function JoyOrderDashboardTemplate() {
   //test
   const message:string = "Hello Joy Boy"
   // access the rust pre-bundled global API functionsconst { invoke } = window.__TAURI__.tauri
-   invoke('my_custom_command', { invokeMessage: message })
+  primitives.invoke('my_custom_command', { invokeMessage: message })
    // `invoke` returns a Promise
    .then((response) => console.log(response))
   //end.
 
   React.useEffect(() => {
     // Ensure the global Tauri API is available
-      invoke("get_server_state")
+    primitives.invoke("get_server_state")
         .then((response) => console.log(response))
         .catch((error) => console.error("Error invoking Rust command:", error));
   }, []);
 
   const getServerState =() => {
-    invoke("get_server_state").then((response) =>console.log(response))
+    primitives.invoke("get_server_state").then((response) =>console.log(response))
   }
   const changeServerState =(state:string) => {
-    invoke("change_server_state",{newState:state}).then((response) =>console.log(response))
+    primitives.invoke("change_server_state",{newState:state}).then((response) =>console.log(response))
   }
 
   const status = useScript(`https://unpkg.com/feather-icons`);

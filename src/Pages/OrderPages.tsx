@@ -12,7 +12,7 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 
 
-import { invoke } from '@tauri-apps/api'
+import { primitives } from '@tauri-apps/api'
 import ColorSchemeToggle from '../components/ColorSchemeToggle';
 import OrderTable from '../components/OrderTable';
 import OrderList from '../components/OrderList';

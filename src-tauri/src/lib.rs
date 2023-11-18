@@ -25,9 +25,12 @@ fn my_custom_command(invoke_message: &str) -> String {
 }
 #[tauri::command]
 async fn image_request(payload: crate::models::ImagePayload) -> Result<serde_json::Value, String> {
+    /*
     dotenv().ok();
     let endpoint = std::env::var("MADCATZ_SERVER")
         .map_err(|e| format!("Failed to read MADCATZ_SERVER environment variable: {}", e))?;
+    */
+    let endpoint = "http://localhost:1010";
 
     let body = serde_json::json!({
         "input": payload.invoke_message.to_string()

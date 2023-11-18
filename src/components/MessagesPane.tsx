@@ -7,15 +7,80 @@ import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
 import MessagesPaneHeader from './MessagesPaneHeader';
 import { ChatProps, MessageProps } from './types';
+import { primitives } from '@tauri-apps/api';
 
 type MessagesPaneProps = {
   chat: ChatProps;
 };
+interface ImagesResponse {
+  created: number;
+  data: UrlImage[];
+}
+
+//type Image = UrlImage | B64JsonImage;
+
+interface UrlImage {
+  url: string;
+  revisedPrompt?: string;
+}
+
+interface B64JsonImage {
+  b64Json: string;
+  revisedPrompt?: string;
+}
+
 
 export default function MessagesPane({ chat }: MessagesPaneProps) {
   const [chatMessages, setChatMessages] = React.useState(chat.messages);
   const [textAreaValue, setTextAreaValue] = React.useState('');
 
+  async function imageRequest(message:string) {
+    try {
+      const request = {
+         invoke_message: message,
+         access_token: "1",
+         user_id: "1",
+      };
+      /*
+      const response: ImagesResponse = await primitives.invoke("image_request",{
+        payload:request
+      });
+      */
+     const response:ImagesResponse = await primitives.invoke("image_request",{
+      payload:request
+    });
+      console.log('Response:', response);
+
+      setChatMessages([
+        ...chatMessages,
+        {
+          id: message,
+          sender: 'You',
+          content: response.data[0].url,
+          timestamp: 'Just now',
+        },
+      ]);
+
+    } catch (error) {
+
+      console.error('Error occurred:', error);
+      let error_string: string = "An error occurred";
+      if (error instanceof TypeError) {
+        error_string = error.toString();
+      }
+      setChatMessages([
+        ...chatMessages,
+        {
+          id: message,
+          sender: 'You',
+          content: error_string,
+          timestamp: 'Just now',
+        },
+      ]);
+
+    }
+  }
+  
   React.useEffect(() => {
     setChatMessages(chat.messages);
   }, [chat.messages]);
@@ -71,6 +136,7 @@ export default function MessagesPane({ chat }: MessagesPaneProps) {
         onSubmit={() => {
           const newId = chatMessages.length + 1;
           const newIdString = newId.toString();
+          imageRequest(textAreaValue);
           setChatMessages([
             ...chatMessages,
             {
